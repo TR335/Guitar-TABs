@@ -7,20 +7,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import android.widget.Toast
 
-import org.jsoup.select.Elements
+import pl.c0.sayard.guitartabs.dataclasses.SearchDataClass
+import pl.c0.sayard.guitartabs.dataclasses.TabInfo
 
 /**
  * Created by Karol on 24.05.2017.
  */
 
-class TabsAdapter(private val context: Context, elements: Elements) : RecyclerView.Adapter<TabsAdapter.ViewHolder>() {
+class SearchAdapter(private val context: Context, results: SearchDataClass) : RecyclerView.Adapter<SearchAdapter.ViewHolder>() {
     private val sortedTabs: List<TabInfo>
 
     init {
         val linkSorter = LinkSorter()
-        sortedTabs = linkSorter.sort(elements)
+        sortedTabs = linkSorter.sortBySong(results)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -34,10 +34,11 @@ class TabsAdapter(private val context: Context, elements: Elements) : RecyclerVi
 
         viewHolder.tabName.text = info.name
         viewHolder.tabType.text = info.type
+        viewHolder.tabArtist.text = info.artist_name
 
         val onClickListener = View.OnClickListener {
-            val intent: Intent = Intent(context, TabDisplayActivity::class.java)
-            intent.putExtra(context.getString(R.string.extra_tab_link), info.link)
+            val intent = Intent(context, TabDisplayActivity::class.java)
+            intent.putExtra(context.getString(R.string.extra_tab_link), info.id)
             context.startActivity(intent)
         }
 
@@ -53,6 +54,7 @@ class TabsAdapter(private val context: Context, elements: Elements) : RecyclerVi
 
         internal var tabName = itemView.findViewById(R.id.tab_name_text_view) as TextView
         internal var tabType = itemView.findViewById(R.id.tab_type_text_view) as TextView
+        internal var tabArtist = itemView.findViewById(R.id.artist_name_text_view) as TextView
 
     }
 }

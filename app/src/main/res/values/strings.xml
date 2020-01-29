@@ -1,9 +1,16 @@
 <resources>
-    <string name="app_name">Guitar TABs</string>
-    <string name="enter_a_song_name">Enter a song name</string>
+    <string name="app_name">TabSearch</string>
     <string name="search">Search</string>
-    <string name="enter_artist_and_song_name">Enter artist and song name</string>
-    <string name="could_not_find_any_tabs_try_again">Could not find any tabs. Try again.</string>
+    <string name="enter_artist_and_song_name">Enter artist or song name</string>
+
+    <string name="tab_title">%1$s by %2$s</string>
+    <string name="tab_difficulty">Difficulty: %1$s</string>
+    <string name="tab_tuning">Tuning: %1$s</string>
+    <string name="tab_author">Author: %1$s</string>
+
+    <string name="could_not_find_any_tabs_try_again">Could not find any tabs. Try again.</string> <!--TODO-->
+    <string name="could_not_display_tab_try_again">Could not display tab. Try again.</string> <!--TODO-->
+    <string name="extra_search_query" translatable="false">pl.0c.sayard.guitartabs.extra.SEARCH_QUERY</string>
     <string name="extra_tab_link" translatable="false">pl.0c.sayard.guitartabs.extra.TAB_LINK</string>
-    <string name="could_not_display_tab_try_again">Could not display tab. Try again.</string>
 </resources>
+

@@ -1,35 +1,46 @@
 package pl.c0.sayard.guitartabs
 
-import org.jsoup.nodes.Element
-import org.jsoup.select.Elements
+import pl.c0.sayard.guitartabs.dataclasses.SearchDataClass
+import pl.c0.sayard.guitartabs.dataclasses.SongVersionInfo
+import pl.c0.sayard.guitartabs.dataclasses.TabInfo
 
 /**
  * Created by Karol on 23.05.2017.
  */
 class LinkSorter {
-
-    fun sort(elements: Elements): MutableList<TabInfo>{
-        val sortedList: MutableList<TabInfo> = mutableListOf()
-        for (element: Element in elements){
-            val tabLink: String = element.attr("href")
-            if(isTabValid(tabLink)){
-                sortedList.add(TabInfo(tabLink, element.text(), determineTabType(tabLink)))
+    fun sortBySong(search: SearchDataClass): MutableList<TabInfo>{
+        val encountered = mutableMapOf<String, Boolean>()
+        val sortedList = mutableListOf<TabInfo>()
+        search.tabs.forEach {
+            if (!encountered.contains(it.song_name) && it.type != "Official" && it.type != "Pro") { //TODO make better tab filter
+                encountered[it.song_name] = true
+                sortedList.add(
+                        TabInfo( //TODO add total versions count
+                                it.id.toString(),
+                                it.song_name,
+                                it.artist_name,
+                                it.type
+                        )
+                )
             }
         }
         return sortedList
     }
 
-    private fun isTabValid(link: String): Boolean{
-        return !(link.contains("power_tab") || link.contains("guitar_pro"))
-    }
-
-    private fun determineTabType(link: String): String {
-        if (link.contains("drum_tab")) {//Drum tab
-            return "Drums"
-        } else if (link.contains("btab")) {//Bass tab
-            return "Bass"
-        } else {//regular tab
-            return "Guitar"
+    fun filterBySongVersions(song: String, search: SearchDataClass): MutableList<SongVersionInfo> {
+        val sortedList = mutableListOf<SongVersionInfo>()
+        search.tabs.forEach{
+            if (it.song_name == song) {
+                sortedList.add(
+                        SongVersionInfo(
+                                "Version" + it.version, //TODO: ??
+                                it.type,
+                                it.rating,
+                                it.votes
+                        )
+                )
+            }
         }
+        return sortedList
     }
 }

@@ -2,7 +2,6 @@ package pl.c0.sayard.guitartabs
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import pl.c0.sayard.guitartabs.networking.TabDisplayTask
 
 class TabDisplayActivity : AppCompatActivity() {
 
